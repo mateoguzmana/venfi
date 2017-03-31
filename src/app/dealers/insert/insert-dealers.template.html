@@ -1,0 +1,147 @@
+<div *ngIf="Enter==1">
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Concesionarios</li>
+  <li class="breadcrumb-item active">Ingresar</li>
+</ol>
+<h3 class="page-title"><span class="fw-semi-bold">Ingresar</span></h3>
+<div class="row">
+  <div class="col-lg-12">
+    <section class="widget" widget>
+      <header>
+        <h5><span class="fw-semi-bold">Ingresar nuevo concesionario</span></h5>
+      </header>
+      <div class="widget-body">
+        <form role="form" (ngSubmit)="onSubmit()" #dealerForm="ngForm">
+            <div class="row">
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="name">Nombre del concesionario</label>
+                    <input class="form-control" type="text" placeholder="Nombre del concesionario" id="name" 
+                    [(ngModel)]="Dealer.name" name="name" #name="ngModel" required>
+                  </div>
+              </div>
+            </div>
+            <hr width="90%">
+            <div class="row">
+              <div class="col-lg-12">
+                <h5><span class="fw-semi-bold">Datos representante legal</span></h5>
+              </div>
+            </div>
+            <hr width="90%">
+            <div class="row">
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="name">Nit</label>
+                    <input class="form-control" type="text" placeholder="Nit" id="nit" 
+                    [(ngModel)]="Dealer.nit" name="nit" #nit="ngModel"  pattern=".{5,}" required>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="name">Nombre</label>
+                    <input class="form-control" type="text" placeholder="Nombre del representante legal" id="namelegal" 
+                    [(ngModel)]="Dealer.namelegal" name="namelegal" #namelegal="ngModel" required>
+                  </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="name">Cédula</label>
+                    <input class="form-control" type="text" placeholder="Cédula del representante legal" id="nitlegal" 
+                    [(ngModel)]="Dealer.nitlegal" name="nitlegal" #nitlegal="ngModel"  pattern=".{5,}" required>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="name">Cámara de comercio</label>
+                    <input class="form-control" type="text" placeholder="Número en la cámara de comercio" id="nitcommerce" 
+                    [(ngModel)]="Dealer.nitcommerce" name="nitcommerce" #nitcommerce="ngModel" required>
+                  </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="name">Rut</label>
+                    <input class="form-control" type="text" placeholder="Rut" id="rut" 
+                    [(ngModel)]="Dealer.rut" name="rut" #rut="ngModel" required>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="name">Dirección</label>
+                    <input class="form-control" type="text" placeholder="Dirección" id="addresslegal" 
+                    [(ngModel)]="Dealer.addresslegal" name="addresslegal" #addresslegal="ngModel"  pattern=".{5,}" required>
+                  </div>
+              </div>
+            </div>
+            <hr width="90%">
+            <div class="row">
+              <div class="col-lg-12">
+                <h5><span class="fw-semi-bold">Datos de encargado del concesionario</span></h5>
+              </div>
+            </div>
+            <hr width="90%">
+            <div class="row">
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="name">Cédula del encargado</label>
+                    <input class="form-control" type="text" placeholder="Cédula del encargado" id="nitmanager" 
+                    [(ngModel)]="Dealer.nitmanager" name="nitmanager" #nitmanager="ngModel"  pattern=".{5,}" required>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="name">Nombre</label>
+                    <input class="form-control" type="text" placeholder="Nombre del encargado" id="namemanager" 
+                    [(ngModel)]="Dealer.namemanager" name="namemanager" #namemanager="ngModel" required>
+                  </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="name">Célular</label>
+                    <input class="form-control" type="number" placeholder="Célular del encargado" id="cellmanager" 
+                    [(ngModel)]="Dealer.cellmanager" name="cellmanager" #cellmanager="ngModel"  pattern=".{10,10}" required>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="name">Telefono</label>
+                    <input class="form-control" type="number" placeholder="Telefono del encargado" id="phonemanager" 
+                    [(ngModel)]="Dealer.phonemanager" name="phonemanager" #phonemanager="ngModel"  pattern=".{5,}" required>
+                  </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="name">Dirección</label>
+                    <input class="form-control" type="text" placeholder="Dirección" id="addressmanager" 
+                    [(ngModel)]="Dealer.addressmanager" name="addressmanager" #addressmanager="ngModel"  pattern=".{5,}"  required>
+                  </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <button type="submit" class="btn btn-primary" [disabled]="!dealerForm.form.valid">Guardar</button>
+                <button class="btn btn-inverse" [routerLink]="'/app/dealers/list'">Volver</button>
+              </div>
+            </div>
+            &nbsp;
+            <div class="row" style="display:none;" id="MessageSuccess">
+              <div class="col-lg-6">
+                <div class="alert alert-success">
+                  Ingresado correctamente.
+                </div>
+              </div>
+            </div>
+        </form>
+      </div>
+    </section>
+  </div>
+</div>
+</div>
+

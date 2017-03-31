@@ -1,0 +1,32 @@
+<div class="clearfix mb-xs">
+  <a class="btn btn-secondary btn-sm width-50 pull-xs-left" id="back-btn" (click)="onToBack()">
+    <i class="fa fa-angle-left fa-lg"></i>
+  </a>
+</div>
+<section class="widget widget-email">
+  <header id="widget-email-header">
+    <h4>Redactar <span class="fw-semi-bold">nuevo</span></h4>
+  </header>
+  <div class="widget-body" id="mailbox-content" (submit)="sendMessage()">
+    <div class="compose-view" id="compose-view">
+      <form id="email-compose" class="form-email-compose">
+        <div class="form-group">
+          <select class="form-control js-example-placeholder-multiple" id="to" width="100%" required></select>
+        </div>
+        <div class="form-group">
+          <input type="text" id="input-subject" placeholder="Asunto" [(ngModel)]="subject"  name="subject" class="input-transparent form-control subject" required>
+        </div>
+        <div class="form-group">
+          <textarea rows="10" class="form-control message" id="wysiwyg" placeholder="Mensaje" required>{{ body }}</textarea>
+        </div>
+        <div class="clearfix">
+          <div class="btn-toolbar pull-right">
+            <button type="reset" id="compose-discard-button" class="btn btn-gray">Descartar</button>
+            <button type="button" id="compose-save-button" class="btn btn-inverse" (click)="saveDraft()">Guardar</button>
+            <button type="submit" id="compose-send-button" class="btn btn-primary">Enviar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

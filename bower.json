@@ -1,0 +1,21 @@
+{
+  "name": "Venfi",
+  "description": "Venfi App",
+  "main": "",
+  "authors": [
+    "Mateo Guzmán <mateo.guzmanalvarez@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "Venfi",
+    "App"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

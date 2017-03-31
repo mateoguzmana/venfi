@@ -1,0 +1,77 @@
+<div> 
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Notificaciones</li>
+  <li class="breadcrumb-item active">Ver</li>
+</ol>
+<div class="row">
+  <div class="col-lg-12">
+    <section class="widget" widget>
+      <header>
+        <h4><strong>{{Notification.message}}</strong></h4>
+      </header>
+      <div class="widget-body">
+            <!-- Print this if it's a viability approve -->
+            <div *ngIf="Notification.idtypeapplication==2 && Notification.idtypeconsultant==2 && Notification.idworkflow==0" class="row">
+              <div class="col-lg-12">
+                   <h5>Observación</h5>
+                   <p>{{Notification.note}}</p> 
+              </div>
+              <div class="col-lg-6">
+                <table class="table">
+                  <thead>
+                    <th>Documentos adjuntos</th>
+                    <th></th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Documento datacrédito</td> 
+                      <td class="text-xs-right"><a class="btn btn-primary" [attr.href]="routeFile+'/uploads/viabilities/2/'+Notification.file2" target="_blank" title="Ver/Descargar"><i class="fa fa-eye"></i></a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- Print this if it's a viability reject -->
+            <div *ngIf="Notification.idtypeapplication==1 && Notification.idtypeconsultant==2 && Notification.idworkflow==0" class="row">
+              <div class="col-lg-12">
+                   <h5>Observación</h5>
+                   <p>{{Notification.note}}</p> 
+              </div>
+            </div>
+            <!-- Print this if it's approve credit step-->
+            <div *ngIf="Notification.idtypeapplication==2 && Notification.idtypeconsultant==2 && Notification.idworkflow!=0" class="row">
+              <div class="col-lg-12">
+                <h6 *ngIf="Notification.idtypenotification!=0 && Notification.idworkflow!=100">{{Notification.idtypenotification==1 ? 'Se ha aprobado el paso '+(Notification.idworkflow-1)+' de la solicitud' : 'Se ha rechazado el paso '+Notification.idworkflow+' de la solicitud'}}</h6>
+              </div>
+              <div class="col-lg-12">
+                   <h5>Observación</h5>
+                   <p>{{Notification.note}}</p> 
+              </div>
+              <div class="col-lg-6">
+                <table class="table" *ngIf="Notification.idtypenotification==1">
+                  <thead>
+                    <th>Documentos adjuntos</th>
+                    <th></th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let file of Notification.files">
+                      <td>{{file.name}}</td> 
+                      <td class="text-xs-right"><a class="btn btn-primary" [attr.href]="routeFile+'/uploads/credits/responsedocuments/'+file.path" target="_blank" title="Ver/Descargar"><i class="fa fa-eye"></i></a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              &nbsp;
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <button class="btn btn-primary" [routerLink]="Notification.routeApplication+Notification.idapplication">{{Notification.idtypeapplication==1 ? 'Ir al estudio de viabilidad': 'Ir a la solicitud de crédito'}}</button>
+              </div>
+            </div>
+      </div>
+    </section>
+  </div>
+</div>
+</div>

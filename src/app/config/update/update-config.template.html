@@ -1,0 +1,216 @@
+<div *ngIf="Actualize==1"> 
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Inicio</li>
+  <li class="breadcrumb-item active">Configuración</li>
+</ol>
+<div class="row">
+  <div class="col-lg-12">
+    <section class="widget" widget>
+      <header>
+        <h3 class="page-title"><span class="fw-semi-bold">Actualizar</span></h3>
+      </header>
+      <hr size="90%">
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#general" role="tab"><strong>General</strong></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#credit" role="tab"><strong>Tipos de documento</strong></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#steps" role="tab"><strong>Pasos del crédito</strong></a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="general" role="tabpanel">
+                <div class="widget-body">
+        <form role="form" (ngSubmit)="onSubmit()" #configForm="ngForm">
+            <hr>
+            <h5><strong>Imágenes de la plataforma</strong></h5>
+            <hr>
+            <div class="row">
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="sessiontime">Logo</label>
+                    <input class="form-control" type="file" id="logofile" name="logofile" accept="image/*" (change)="preloadImage($event)">
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <a [attr.href]="routeLogo" target="_blank">(Ver foto)</a>
+                    </div>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group" id="preloadImage">
+                </div>
+              </div>
+            </div>
+            <hr>
+            <h5><strong>Seguridad de la aplicación</strong></h5>
+            <hr>
+            <div class="row">
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="sessiontime">Tiempo de cierre de sesión (minutos)</label>
+                    <input class="form-control" type="number" placeholder="Texto habeas data" id="sessiontime" 
+                    [(ngModel)]="Config.sessiontime" name="sessiontime" #sessiontime="ngModel">
+                  </div>
+              </div>
+            </div>
+            <hr>
+            <h5><strong>Textos e información</strong></h5>
+            <hr>
+            <div class="row">
+              <div class="col-lg-12">
+                  <div class="form-group">
+                    <label for="habeasdata">Texto habeas data</label>
+                    <textarea class="form-control"placeholder="Texto habeas data" id="habeasdata" 
+                    [(ngModel)]="Config.habeasdata" name="habeasdata" #habeasdata="ngModel" rows="3"></textarea>
+                  </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <button type="submit" class="btn btn-primary" [disabled]="!configForm.form.valid">Guardar</button>
+              </div>
+            </div>
+            &nbsp;
+            <div class="row" style="display:none;" id="MessageSuccess">
+              <div class="col-lg-6">
+                <div class="alert alert-success">
+                  Actualizado correctamente.
+                </div>
+              </div>
+            </div>
+        </form>
+      </div>
+        </div>
+        <div class="tab-pane" id="credit" role="tabpanel">
+          <div class="widget-body">
+            <hr>
+            <h5><strong>Tipos de documento</strong></h5>
+            <div class="row">
+              <div class="col-lg-12">
+                  <table class="table table-hover" id="tableTypeDocuments">
+                    <thead>
+                      <th>Nombre</th>
+                      <th>Pasos</th>
+                      <th>Tipo</th>
+                      <th>Ocupación</th>
+                      <th></th>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let TypeDocument of TypeDocuments">
+                        <td [attr.id]="'tdName'+TypeDocument.idtypedocument"><span [attr.id]="'textTd'+TypeDocument.idtypedocument">{{TypeDocument.name}}</span></td>
+                        <td [attr.id]="'tdWorkflow'+TypeDocument.idtypedocument"><span [attr.id]="'textWorkflow1'+TypeDocument.idtypedocument">{{TypeDocument.listworkflow}}</span></td>
+                        <td [attr.id]="'tdType'+TypeDocument.idtypedocument"><span [attr.id]="'textType'+TypeDocument.idtypedocument" [attr.class]="'textType'+TypeDocument.type">{{TypeDocument.type==1 ? 'Carga' : 'Respuesta'}}</span></td>
+                        <td [attr.id]="'tdOccupation'+TypeDocument.idtypedocument"><span [attr.id]="'textOccupation1'+TypeDocument.idtypedocument">{{TypeDocument.occupation}}</span></td>
+                        <td [attr.id]="'tdButtons'+TypeDocument.idtypedocument" class="text-xs-right">
+                          <span [attr.id]="'span1'+TypeDocument.idtypedocument"><button *ngIf="Actualize==1 && TypeDocument.state==1" class="btn btn-primary" (click)="updateTypeDocument(TypeDocument.idtypedocument)"><i class="fa fa-pencil"></i></button>
+                          <button *ngIf="Remove==1 && TypeDocument.state != 2" type="button"   (click)="openModal(TypeDocument.idtypedocument)" [attr.title]="TypeDocument.state == 1 ? 'Desactivar' : 'Activar'" [ngClass]="TypeDocument.state == 1 ? 'btn btn-danger' : 'btn btn-success'">
+                            <i [ngClass]="TypeDocument.state == 1 ? 'fa fa-unlock-alt' : 'fa fa-unlock'"></i>
+                          </button></span>
+                        </td>
+                        <div *ngIf="Remove==1" class="modal fade" [attr.id]="'myModal'+TypeDocument.idtypedocument" style="z-index:1200;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">{{TypeDocument.state == 1 ? 'Inhabilitar' : 'Habilitar'}} Documento</h4>
+                              </div>
+                              <div class="modal-body">
+                                ¿Desea {{TypeDocument.state == 1 ? 'Inhabilitar' : 'Habilitar'}} el tipo de documento "{{TypeDocument.name}}"?
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-gander" data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-primary" (click)="changeState(TypeDocument.idtypedocument, TypeDocument.state)" data-dismiss="modal">Aceptar</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td colspan="4"></td>
+                        <td class="text-xs-right">
+                          <button id="btnNewTypeDocument" class="btn btn-success" (click)="newTypeDocument()">Crear nuevo</button>
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+              </div>
+            </div>
+            &nbsp;
+            <div class="row" style="display:none;" id="MessageSuccess2">
+              <input type="hidden" id="ContinueProcess" (click)="addNewTypeDocument()">
+              <input type="hidden" id="ContinueProcess2" (click)="saveUpdateTypeDocument()">
+            </div>
+      </div>
+        </div>
+        <div class="tab-pane" id="steps" role="tabpanel">
+          <div class="widget-body">
+            <hr>
+            <h5><strong>Pasos del crédito</strong></h5>
+            <div class="row">
+              <div class="col-lg-12">
+                  <table class="table table-hover" id="tableWorkflow">
+                    <thead>
+                      <th>Nombre</th>
+                      <th></th>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let Workflow of Workflows">
+                        <td [attr.id]="'2tdName'+Workflow.idworkflow">
+                          <span [attr.id]="'2textTd'+Workflow.idworkflow">{{Workflow.name}}</span>
+                        </td>
+                        <td [attr.id]="'2tdButtons'+Workflow.idworkflow" class="text-xs-right">
+                          <span [attr.id]="'2span1'+Workflow.idworkflow">
+                            <button *ngIf="Actualize==1 && Workflow.state==1" class="btn btn-primary" (click)="updateWorkflow(Workflow.idworkflow)"><i class="fa fa-pencil"></i></button>
+                          <!--<button *ngIf="Remove==1 && Workflow.state != 2" type="button"   (click)="openModal2(Workflow.idworkflow)" [attr.title]="Workflow.state == 1 ? 'Desactivar' : 'Activar'" [ngClass]="Workflow.state == 1 ? 'btn btn-danger' : 'btn btn-success'">
+                            <i [ngClass]="Workflow.state == 1 ? 'fa fa-unlock-alt' : 'fa fa-unlock'"></i>
+                          </button>-->
+                          </span>
+                        </td>
+                        <div *ngIf="Remove==1" class="modal fade" [attr.id]="'2myModal'+Workflow.idworkflow" style="z-index:1200;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">{{Workflow.state == 1 ? 'Inhabilitar' : 'Habilitar'}} Paso</h4>
+                              </div>
+                              <div class="modal-body">
+                                ¿Desea {{Workflow.state == 1 ? 'Inhabilitar' : 'Habilitar'}} el paso número "{{Workflow.name}}"?
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-gander" data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-primary" (click)="changeStateWorkflow(Workflow.idworkflow, Workflow.state)" data-dismiss="modal">Aceptar</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </tr>
+                    </tbody>
+                    <!--<tfoot>
+                      <tr>
+                        <td></td>
+                        <td class="text-xs-right">
+                          <button id="btnNewWorkflow" class="btn btn-success" (click)="newWorkflow()">Crear nuevo</button>
+                        </td>
+                      </tr>
+                    </tfoot>-->
+                  </table>
+              </div>
+            </div>
+            <div class="row" style="display:none;" id="MessageSuccess3">
+              <input type="hidden" id="2ContinueProcess" (click)="addNewWorkflow()">
+              <input type="hidden" id="2ContinueProcess2" (click)="saveUpdateWorkflow()">
+            </div>
+      </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+</div>

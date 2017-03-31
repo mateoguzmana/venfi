@@ -1,0 +1,102 @@
+<div *ngIf="View==1">
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Inicio</li>
+  <li class="breadcrumb-item active">Estudio de viabilidad</li>
+</ol>
+<section class="widget" widget>
+  <header>
+    <h4><span class="fw-semi-bold">Estudio de viabilidad</span></h4>
+    <div class="widget-controls">
+       <a *ngIf="Enter==1"  tooltip="Ingresar nueva viabilidad" tooltipPlacement="left" [routerLink]="'../insert'"><strong>Nueva viabilidad</strong></a>
+       <a (click)="LoadList()"><i class="fa fa-refresh"></i></a>
+    </div>
+  </header>
+  <div class="widget-body">
+    <div class="mt">
+      <div class="width-200 pull-xs-right">
+        <div class="input-group input-group-sm input-group-transparent input-group-rounded">
+          <span class="input-group-addon">
+            <i class="fa fa-search"></i>
+          </span>
+          <input class="form-control form-control-sm" id="table-search-input" [(ngModel)]="searchText" type="text" placeholder="Buscar">
+        </div>
+      </div>
+      <table class="table table-hover" [mfData]="Viabilities" #mf="mfDataTable" [mfRowsOnPage]="10">
+        <thead>
+        <tr>
+          <th>
+            <mfDefaultSorter by="nit">Cédula</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="name">Nombre</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="state">Estado</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="date"></mfDefaultSorter>
+          </th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let Viability of mf.data | SearchPipe : searchText">
+          <td>{{Viability.nit}}</td>
+          <td>{{Viability.name}}</td>
+          <td class="text-right">
+            <span [ngSwitch]="Viability.state">
+              <span *ngSwitchCase="0">Cancelada</span>
+              <span *ngSwitchCase="1">Pendiente</span>
+              <span *ngSwitchCase="2">Aprobada</span>
+              <span *ngSwitchCase="3">Rechazada</span>
+            </span>
+          </td>
+          <td><span [attr.class]="(sendTime(Viability.date) >= 24) ? 'alert-danger' : 'alert-success'">Enviado hace {{sendTime(Viability.date)}} horas</span></td>
+          <td class="text-xs-right">
+            <button *ngIf="Viability.state==2" type="button" class="btn btn-info" title="Ir a solicitud de crédito" [routerLink]="['/app/credits/update', Viability.idcredit]">Aprobada</button>
+            <button *ngIf="Actualize==1 && Viability.state==1" type="button" class="btn btn-primary" title="Actualizar" [routerLink]="['/app/viabilities/update', Viability.idviability]"><i class="fa fa-pencil"></i></button>
+            <button *ngIf="Remove==1 && Viability.state==1" type="button"  data-toggle="modal" [attr.data-target]="'#myModal'+Viability.idviability" [attr.title]="'Desactivar'" [ngClass]="'btn btn-danger'">
+              <i [ngClass]="'fa fa-unlock-alt'"></i>
+            </button>
+            <button *ngIf="Remove==1 && Viability.state==0" type="button"  data-toggle="modal" [attr.data-target]="'#myModal'+Viability.idviability" [attr.title]="'Activar'" [ngClass]="'btn btn-success'">
+              <i [ngClass]="'fa fa-unlock'"></i>
+            </button>
+            <button *ngIf="Actualize==1 && Viability.state==3" type="button" class="btn btn-warning" title="Actualizar" [routerLink]="['/app/viabilities/see', Viability.idviability]">Ver</button>
+            <button *ngIf="Inspect==1 && Viability.state==1" type="button"  [routerLink]="['/app/viabilities/inspect', Viability.idviability]" class="btn btn-success">Revisar</button>
+          </td>
+          <div *ngIf="Remove==1" class="modal fade" [attr.id]="'myModal'+Viability.idviability" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">{{Viability.state == 1 ? 'Inhabilitar' : 'Habilitar'}} estudio de viabilidad</h4>
+                    </div>
+                    <div class="modal-body">
+                    ¿Desea {{Viability.state == 1 ? 'Inhabilitar' : 'Habilitar'}} el estudio de viabilidad del usuario con cédula N° {{Viability.nit}}?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-gander" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" (click)="changeState(Viability.idviability, Viability.state)" data-dismiss="modal">Aceptar</button>
+                      </div>
+                  </div>
+                </div>
+          </div>
+        </tr>
+        <tr *ngIf="(mf.data | SearchPipe : searchText).length === 0">
+          <td colspan="4" class="text-xs-center">
+            No hay resultados de busqueda.
+          </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+          <td colspan="12">
+            <mfBootstrapPaginator [rowsOnPageSet]="[10, 25, 50, 100]"></mfBootstrapPaginator>
+          </td>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</section>
+</div>

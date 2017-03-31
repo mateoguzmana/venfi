@@ -1,0 +1,480 @@
+<div *ngIf="Inspect==1"> 
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Solicitud de crédito</li>
+  <li class="breadcrumb-item active">Revisar</li>
+</ol>
+<h3 class="page-title"><span class="fw-semi-bold">Revisar solicitud de crédito</span></h3>
+<div class="row">
+  <div class="col-lg-12">
+    <section class="widget" widget>
+      <!--<div class="row">
+        <div class="col-lg-12">
+          <ul class="progressbar">
+            <li class="active">Paso 1</li>
+            <li>choose interest</li>
+            <li>add friends</li>
+            <li>View map</li>
+            <li>choose interest</li>
+            <li>add friends</li>
+            <li>View map</li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">&nbsp;</div>-->
+      <div class="widget-body">
+        <div id="StepTwo">
+        <h6>Solicitante con número de identificación <span class="fw-semi-bold">{{  Credit.debtor.nit }}</span></h6>
+        <hr size="90%">
+        <form role="form" #creditForm2="ngForm" (change)="AutomaticSave()" id="form">
+          <ul class="nav nav-tabs" role="tablist" style="background-color: rgba(23, 21, 0, 0.1);">
+            <li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#datacredit">Datos del crédito</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#debtor">Solicitante</a></li>
+            <li *ngFor="let codebtor of Credit.codebtors; let i = index;" class="nav-item"><a class="nav-link" data-toggle="pill" href="#codebtor{{i}}">Respaldo {{i == 0 ? '' : i+1}} &nbsp;&nbsp; <i *ngIf="Credit.codebtors.length>1" class="fa fa-times" (click)="DeleteTab(i);AutomaticSave()"></i></a></li>
+            <!--<li class="nav-item" title="Nuevo respaldo"><a class="nav-link" (click)="newTab()"><i class="fa fa-plus"></i></a></li>-->
+          </ul>
+          <div class="tab-content">
+          <div class="tab-pane fade in active" id="datacredit" role="tabpanel">
+            <div class="row">
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="consultant">Asesor</label>
+                    <input class="form-control" type="text" placeholder="Asesor del crédito" id="consultant" 
+                    [(ngModel)]="Credit.nameconsultant" name="consultant" #consultant="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="agreement">Convenio</label>
+                    <input class="form-control" type="text" placeholder="Nombre del convenio" id="agreement" 
+                    [(ngModel)]="Credit.nameagreement" name="agreement" #nameagreement="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="value">Valor Moto</label>
+                    <input class="form-control" type="number" step="0.01" placeholder="Valor del crédito" id="value" 
+                    [(ngModel)]="Credit.value" name="value" #value="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="safevalue">Valor Seguro</label>
+                    <input class="form-control" type="number" step="0.01" placeholder="Valor del crédito" id="safevalue" 
+                    [(ngModel)]="Credit.safevalue" name="safevalue" #safevalue="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="quotas">Cuotas</label>
+                    <input class="form-control" type="number" placeholder="Número de cuotas" id="quotas" 
+                    [(ngModel)]="Credit.quotas" name="quotas" #quotas="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="date">Fecha</label>
+                    <input class="form-control" type="text" placeholder="Fecha del crédito" id="date" 
+                    [(ngModel)]="Credit.date" name="date" #date="ngModel" required readonly>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="debtor" role="tabpanel">
+          <h5><strong>Datos solicitante</strong></h5>
+          <hr size="90%">
+            <div class="row">
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="namedebtor">Nombre del solicitante</label>
+                    <input class="form-control" type="text" placeholder="Nombre del solicitante" id="namedebtor" 
+                    [(ngModel)]="Credit.debtor.name" name="namedebtor" #namedebtor="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="namedebtor">Cédula</label>
+                    <input class="form-control" type="text" [value]="Credit.debtor.nit" disabled readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="addressdebtor">Dirección</label>
+                    <input class="form-control" type="text" placeholder="Dirección del solicitante" id="addressdebtor" 
+                    [(ngModel)]="Credit.debtor.address" name="addressdebtor" #addressdebtor="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="celldebtor">Celular</label>
+                    <input class="form-control" type="number" placeholder="Celular del solicitante" id="celldebtor" 
+                    [(ngModel)]="Credit.debtor.cell" name="celldebtor" #celldebtor="ngModel" pattern=".{5,}" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="phone1debtor">Telefono</label>
+                    <input class="form-control" type="number" placeholder="Telefono del solicitante" id="phone1debtor" 
+                    [(ngModel)]="Credit.debtor.phone1" name="phone1debtor" #phone1debtor="ngModel" pattern=".{5,}" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="emaildebtor">Email</label>
+                    <input class="form-control" type="email" placeholder="Email del solicitante" id="emaildebtor" 
+                    [(ngModel)]="Credit.debtor.email" name="emaildebtor" #emaildebtor="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="companydebtor">Empresa</label>
+                    <input class="form-control" type="text" placeholder="Empresa del solicitante" id="companydebtor" 
+                    [(ngModel)]="Credit.debtor.company" name="companydebtor" #companydebtor="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="phone2debtor">Telefono empresa</label>
+                    <input class="form-control" type="number" placeholder="Telefono empresa" id="phone2debtor" 
+                    [(ngModel)]="Credit.debtor.phone2" name="phone2debtor" #phone2debtor="ngModel" pattern=".{5,}" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="monthlyincomedebtor">Ingresos mensuales</label>
+                    <input class="form-control" type="number" step="0.01" placeholder="Ingresos mensuales" id="monthlyincomedebtor" 
+                    [(ngModel)]="Credit.debtor.monthlyincome" name="monthlyincomedebtor" #monthlyincomedebtor="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="monthlyexpensesdebtor">Egresos mensuales</label>
+                    <input class="form-control" type="number" step="0.01" placeholder="Egresos mensuales" id="monthlyexpensesdebtor" 
+                    [(ngModel)]="Credit.debtor.monthlyexpenses" name="monthlyexpensesdebtor" #monthlyexpensesdebtor="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="otherincomedebtor">Otros ingresos</label>
+                    <input class="form-control" type="number" step="0.01" placeholder="Otros ingresos" id="otherincomedebtor" 
+                    [(ngModel)]="Credit.debtor.otherincome" name="otherincomedebtor" #otherincomedebtor="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="activesdebtor">Activos</label>
+                    <input class="form-control" type="number" step="0.01" placeholder="Activos" id="activesdebtor" 
+                    [(ngModel)]="Credit.debtor.actives" name="activesdebtor" #activesdebtor="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="liabilitiesdebtor">Pasivos</label>
+                    <input class="form-control" type="number" step="0.01" placeholder="Pasivos" id="liabilitiesdebtor" 
+                    [(ngModel)]="Credit.debtor.liabilities" name="liabilitiesdebtor" #liabilitiesdebtor="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="patrimonydebtor">Patrimonio</label>
+                    <input class="form-control" type="number" step="0.01" placeholder="Patrimonio" id="patrimonydebtor" 
+                    [(ngModel)]="Credit.debtor.patrimony" name="patrimonydebtor" #patrimonydebtor="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-12">
+                  <div class="form-group">
+                    <label for="otherincomeconceptdebtor">Concepto de otros ingresos</label>
+                    <textarea class="form-control" placeholder="Concepto de otros ingresos" id="otherincomeconceptdebtor" 
+                    [(ngModel)]="Credit.debtor.otherincomeconcept" name="otherincomeconceptdebtor" #otherincomeconceptdebtor="ngModel" required readonly></textarea>
+                  </div>
+              </div>
+          </div>
+          <hr size="90%">
+          <h5><strong>Referencias comerciales, familiares o personales</strong></h5>
+          <hr size="90%">
+          <div class="row">
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="namereferencedebtor">Nombre de la referencia</label>
+                    <input class="form-control" type="text" placeholder="Nombre de la referencia" id="namereferencedebtor" 
+                    [(ngModel)]="Credit.debtor.namereference" name="namereferencedebtor" #namereferencedebtor="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="phonereferencedebtor">Telefono de la refenrencia</label>
+                    <input class="form-control" type="number" placeholder="Telefono de la refenrencia" id="phonereferencedebtor" 
+                    [(ngModel)]="Credit.debtor.phonereference" name="phonereferencedebtor" #phonereferencedebtor="ngModel" pattern=".{5,}" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="observationsdebtor">Observaciones</label>
+                    <input class="form-control" type="text" placeholder="Observaciones" id="observationsdebtor" 
+                    [(ngModel)]="Credit.debtor.observations" name="observationsdebtor" #observationsdebtor="ngModel" required readonly>
+                  </div>
+              </div>
+            </div>
+            <hr size="90%">
+              <h5><strong>Documentos</strong></h5>
+            <div class="row" *ngIf="Credit.debtor.documents && Credit.debtor.documents!=''">
+              <table class="table table-hover">
+                <thead>
+                  <th width="70%">Tipo de documento</th>
+                  <th width="30%">Url</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let debtordocs of Credit.debtor.documents; let i = index" [attr.id]="'rowdocument'+debtordocs.iddocument">
+                    <td>{{debtordocs.typedocument}}</td>
+                    <td><a [attr.href]="routeFile+debtordocs.path" target="_blank"> (Ver documento) </a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div *ngFor="let codebtor of Credit.codebtors; let i = index;" class="tab-pane fade" id="codebtor{{i}}" role="tabpanel">
+          <h5><strong>Datos respaldo</strong></h5>
+          <hr size="90%">
+            <div class="row">
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label [attr.for]="'namecodebtor'+ i">Nombre del Respaldo</label>
+                    <input class="form-control" type="text" placeholder="Nombre del Respaldo" id="namecodebtor{{i}}" 
+                    [(ngModel)]="Credit.codebtors[i].namecodebtor" name="namecodebtor{{i}}" #namecodebtor="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="nitcodebtor">Cédula</label>
+                    <input class="form-control" type="text" placeholder="Nombre del Respaldo" id="nitcodebtor{{i}}" 
+                    [(ngModel)]="Credit.codebtors[i].nitcodebtor" name="nitcodebtor{{i}}" #nitcodebtor="ngModel" pattern=".{5,}" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label [attr.for]="'addresscodebtor'+ i">Dirección</label>
+                    <input class="form-control" type="text" placeholder="Dirección" id="addresscodebtor{{i}}" 
+                    [(ngModel)]="Credit.codebtors[i].addresscodebtor" name="addresscodebtor{{i}}" #addresscodebtor="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label [attr.for]="'cellcodebtor'+ i">Celular</label>
+                    <input class="form-control" type="number" placeholder="Celular" id="cellcodebtor{{i}}" 
+                    [(ngModel)]="Credit.codebtors[i].cellcodebtor" name="cellcodebtor{{i}}" #cellcodebtor="ngModel" pattern=".{5,}" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label [attr.for]="'phone1codebtor'+ i">Telefono</label>
+                    <input class="form-control" type="number" placeholder="Telefono" id="phone1codebtor{{i}}" 
+                    [(ngModel)]="Credit.codebtors[i].phone1codebtor" name="phone1codebtor{{i}}" #phone1codebtor="ngModel" pattern=".{5,}" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label [attr.for]="'emailcodebtor'+ i">Email</label>
+                    <input class="form-control" type="email" placeholder="Email" id="emailcodebtor{{i}}" 
+                    [(ngModel)]="Credit.codebtors[i].emailcodebtor" name="emailcodebtor{{i}}" #emailcodebtor="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label [attr.for]="'companycodebtor'+ i">Empresa</label>
+                    <input class="form-control" type="text" placeholder="Empresa" id="companycodebtor{{i}}" 
+                    [(ngModel)]="Credit.codebtors[i].companycodebtor" name="companycodebtor{{i}}" #companycodebtor="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label [attr.for]="'phone2codebtor'+ i">Telefono empresa</label>
+                    <input class="form-control" type="number" placeholder="Telefono empresa" id="phone2codebtor{{i}}" 
+                    [(ngModel)]="Credit.codebtors[i].phone2codebtor" name="phone2codebtor{{i}}" #phone2codebtor="ngModel" pattern=".{5,}" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label [attr.for]="'monthlyincomecodebtor'+ i">Ingresos mensuales</label>
+                    <input class="form-control" type="number" step="0.01" placeholder="Ingresos mensuales" id="monthlyincomecodebtor{{i}}" 
+                    [(ngModel)]="Credit.codebtors[i].monthlyincomecodebtor" name="monthlyincomecodebtor{{i}}" #monthlyincomecodebtor="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label [attr.for]="'monthlyexpensescodebtor'+ i">Egresos mensuales</label>
+                    <input class="form-control" type="number" step="0.01" placeholder="Egresos mensuales" id="monthlyexpensescodebtor{{i}}" 
+                    [(ngModel)]="Credit.codebtors[i].monthlyexpensescodebtor" name="monthlyexpensescodebtor{{i}}" #monthlyexpensescodebtor="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label [attr.for]="'otherincomecodebtor'+ i">Otros ingresos</label>
+                    <input class="form-control" type="number" step="0.01" placeholder="Otros ingresos" id="otherincomecodebtor{{i}}" 
+                    [(ngModel)]="Credit.codebtors[i].otherincomecodebtor" name="otherincomecodebtor{{i}}" #otherincomecodebtor="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label [attr.for]="'activescodebtor'+ i">Activos</label>
+                    <input class="form-control" type="number" step="0.01" placeholder="Activos" id="activescodebtor{{i}}" 
+                    [(ngModel)]="Credit.codebtors[i].activescodebtor" name="activescodebtor{{i}}" #activescodebtor="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label [attr.for]="'liabilitiescodebtor'+ i">Pasivos</label>
+                    <input class="form-control" type="number" step="0.01" placeholder="Pasivos" id="liabilitiescodebtor{{i}}" 
+                    [(ngModel)]="Credit.codebtors[i].liabilitiescodebtor" name="liabilitiescodebtor{{i}}" #liabilitiescodebtor="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label [attr.for]="'patrimonycodebtor'+ i">Patrimonio</label>
+                    <input class="form-control" type="number" step="0.01" placeholder="Patrimonio" id="patrimonycodebtor{{i}}" 
+                    [(ngModel)]="Credit.codebtors[i].patrimonycodebtor" name="patrimonycodebtor{{i}}" #patrimonycodebtor="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-12">
+                  <div class="form-group">
+                    <label [attr.for]="'otherincomeconceptcodebtor'+ i">Otro concepto de ingresos</label>
+                    <textarea class="form-control" placeholder="Otro concepto de ingresos" id="otherincomeconceptcodebtor{{i}}" 
+                    [(ngModel)]="Credit.codebtors[i].otherincomeconceptcodebtor" name="otherincomeconceptcodebtor{{i}}" #otherincomeconceptcodebtor="ngModel" required readonly></textarea>
+                  </div>
+              </div>
+          </div>
+          <hr size="90%">
+          <h5><strong>Referencias comerciales, familiares o personales</strong></h5>
+          <hr size="90%">
+          <div class="row">
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label [attr.for]="'namereferencecodebtor'+ i">Nombre de la referencia</label>
+                    <input class="form-control" type="text" placeholder="Nombre de la referencia" id="namereferencecodebtor{{i}}" 
+                    [(ngModel)]="Credit.codebtors[i].namereferencecodebtor" name="namereferencecodebtor{{i}}" #namereferencecodebtor="ngModel" required readonly> 
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label [attr.for]="'phonereferencecodebtor'+ i">Telefono de la referencia</label>
+                    <input class="form-control" type="number" placeholder="Telefono de la referencia" id="phonereferencecodebtor{{i}}" 
+                    [(ngModel)]="Credit.codebtors[i].phonereferencecodebtor" name="phonereferencecodebtor{{i}}" #phonereferencecodebtor="ngModel" pattern=".{5,}" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label [attr.for]="'observationscodebtor'+ i">Observaciones</label>
+                    <input class="form-control" type="text" placeholder="Observaciones" id="observationscodebtor{{i}}" 
+                    [(ngModel)]="Credit.codebtors[i].observationscodebtor" name="observationscodebtor{{i}}" #liabilitiescodebtor="ngModel" required readonly>
+                  </div>
+              </div>
+            </div>
+            <hr size="90%">
+              <h5><strong>Documentos</strong></h5>
+            <div class="row" *ngIf="Credit.codebtors[i].documents && Credit.codebtors[i].documents!=''">
+              <table class="table table-hover">
+                <thead>
+                  <th width="70%">Tipo de documento</th>
+                  <th width="30%">Url</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let codebtordocs of Credit.codebtors[i].documents; let ix = index" [attr.id]="'rowdocument'+codebtordocs.iddocument">
+                    <td>{{codebtordocs.typedocument}}</td>
+                    <td><a [attr.href]="routeFile+codebtordocs.path" target="_blank"> (Ver documento) </a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <button type="button" class="btn btn-success" data-toggle="modal" [attr.data-target]="'#myModalApprove'">Aprobar</button>
+                <button type="button" class="btn btn-danger" data-toggle="modal" [attr.data-target]="'#myModalReject'">Rechazar</button>    
+                <button type="button" class="btn btn-inverse" id="btnExit" (click)="BackUrl()">Volver</button>
+              </div>
+            </div>
+        </form>
+        </div>
+        <form #ApproveForm="ngForm">
+        <div class="modal fade" [attr.id]="'myModalApprove'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content" id="MessageSuccess">
+                    <div class="modal-header">
+                      <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">¿Desea aprobar esta solicitud de crédito?</h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <textarea class="form-control" placeholder="Motivos de aprobación" id="note" 
+                          [(ngModel)]="Credit.note" name="note" #note="ngModel" required></textarea>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <table class="table">
+                            <thead>
+                              <th width="45%">Tipo de documento</th>
+                              <th width="45%"></th>
+                              <th width="10%"></th>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let responsedocument of Credit.responsedocuments" [attr.id]="'rowdocument'+responsedocument.idresponsedocument">
+                                <td>{{responsedocument.typedocument}}</td>
+                                <td><a [attr.href]="routeFile+responsedocument.path" target="_blank">(Ver documento)</a></td>
+                                <td class="text-xs-right"><button type="button" class="btn btn-danger" (click)="DeleteDocument(responsedocument.idresponsedocument)" title="Eliminar documento"><i class="fa fa-trash"></i></button></td> 
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                          <label for="typedocument">Tipo de documento</label>
+                            <select class="form-control" id="typedocument" (change)="changeSelectDocument()">
+                              <option value="">Seleccione un tipo de documento</option>
+                              <option *ngFor="let typedocument of typedocuments" [attr.value]="typedocument.idtypedocument">{{typedocument.name}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label for="document">Documento</label>
+                            <input class="form-control" type="file" placeholder="Documento" id="document" (change)="changeSelectDocument()" accept="image/*,.xls,.xlsx,.pdf,.doc,.docx">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-gander" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-success" (click)="approveCredit()" [disabled]="!ApproveForm.form.valid">Aceptar</button>
+                      </div>
+                  </div>
+                </div>
+          </div>
+        </form>
+        <form #RejectForm="ngForm">
+        <div class="modal fade" [attr.id]="'myModalReject'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content" id="MessageSuccess1">
+                    <div class="modal-header">
+                      <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">¿Desea rechazar esta solicitud de crédito?</h4>
+                    </div>
+                    <div class="modal-body">
+                    <textarea class="form-control" placeholder="Motivos de rechazo" id="note" 
+                    [(ngModel)]="Credit.note" name="note" #note="ngModel" required></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-gander" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" (click)="rejectCredit()" [disabled]="!RejectForm.form.valid">Aceptar</button>
+                    </div>
+                  </div>
+                </div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+</div>
+</div>

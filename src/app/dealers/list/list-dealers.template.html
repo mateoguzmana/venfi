@@ -1,0 +1,83 @@
+<div *ngIf="View==1">
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Inicio</li>
+  <li class="breadcrumb-item active">Concesionarios</li>
+</ol>
+<section class="widget" widget>
+  <header>
+    <h4><span class="fw-semi-bold">Concesionarios</span></h4>
+    <div class="widget-controls">
+       <a *ngIf="Enter==1"  tooltip="Ingresar nuevo usuario" tooltipPlacement="left" [routerLink]="'../insert'"><i class="fa fa-plus"></i></a>
+       <a (click)="LoadList()"><i class="fa fa-refresh"></i></a>
+    </div>
+  </header>
+  <div class="widget-body">
+    <div class="mt">
+      <div class="width-200 pull-xs-right">
+        <div class="input-group input-group-sm input-group-transparent input-group-rounded">
+          <span class="input-group-addon">
+            <i class="fa fa-search"></i>
+          </span>
+          <input class="form-control form-control-sm" id="table-search-input" [(ngModel)]="searchText" type="text" placeholder="Buscar">
+        </div>
+      </div>
+      <table class="table table-hover" [mfData]="Dealers" #mf="mfDataTable" [mfRowsOnPage]="10">
+        <thead>
+        <tr>
+          <th>
+            <mfDefaultSorter by="name">Nombre</mfDefaultSorter>
+          </th>
+          <th class="no-sort">
+            <mfDefaultSorter by="state">Estado</mfDefaultSorter>
+          </th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let Dealer of mf.data | SearchPipe : searchText">
+          <td>{{Dealer.name}}</td>
+          <td class="text-right">
+            {{Dealer.state == 1 ? 'Activo' : 'Inactivo'}}
+          </td>
+          <td class="text-xs-right">
+            <button *ngIf="Actualize==1" type="button" class="btn btn-primary" title="Actualizar" [routerLink]="['/app/dealers/update', Dealer.iddealer]"><i class="fa fa-pencil"></i></button>
+            <button *ngIf="Remove==1" type="button"  data-toggle="modal" [attr.data-target]="'#myModal'+Dealer.iddealer" [attr.title]="Dealer.state == 1 ? 'Desactivar' : 'Activar'" [ngClass]="Dealer.state == 1 ? 'btn btn-danger' : 'btn btn-success'">
+              <i [ngClass]="Dealer.state == 1 ? 'fa fa-unlock-alt' : 'fa fa-unlock'"></i>
+            </button>
+          </td>
+          <div *ngIf="Remove==1" class="modal fade" [attr.id]="'myModal'+Dealer.iddealer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">{{Dealer.state == 1 ? 'Inhabilitar' : 'Habilitar'}} Usuario</h4>
+                    </div>
+                    <div class="modal-body">
+                    ¿Desea {{Dealer.state == 1 ? 'Inhabilitar' : 'Habilitar'}} el usuario {{Dealer.name}}?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-gander" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" (click)="changeState(Dealer.iddealer, Dealer.state)" data-dismiss="modal">Aceptar</button>
+                      </div>
+                  </div>
+                </div>
+              </div>
+        </tr>
+        <tr *ngIf="(mf.data | SearchPipe : searchText).length === 0">
+          <td colspan="4" class="text-xs-center">
+            No hay resultados de busqueda.
+          </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+          <td colspan="12">
+            <mfBootstrapPaginator [rowsOnPageSet]="[10, 25, 50, 100]"></mfBootstrapPaginator>
+          </td>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</section>
+</div>

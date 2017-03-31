@@ -1,0 +1,27 @@
+<section class="card notifications">
+  <header class="card-header">
+    <div class="text-xs-center mb-sm">
+      <strong>Tienes {{totalNotifications}} notificaciones</strong>
+    </div>
+  </header>
+  <div id="notifications-list" class="list-group thin-scroll">
+    <a *ngFor="let notification of notifications; let i = index" class="list-group-item" (click)="removeNotification(i)" [routerLink]="['/app/notifications/view/', notification.idnotification]">
+      <span class="thumb-sm pull-xs-left mr">
+        <i [attr.class]="notification.idtypeapplication==1 ? 'glyphicon glyphicon-saved fa-lg' : 'glyphicon glyphicon-usd fa-lg'"></i>
+      </span>
+      <p class="text-ellipsis no-margin">
+        {{notification.message.split("||||")[0]}} 
+      </p>
+      <time class="help-block no-margin">
+        {{notification.date}}
+      </time>
+    </a>
+  </div>
+  <footer class="card-footer text-sm">
+    <a class="btn btn-xs btn-link pull-xs-right" [routerLink]="'notifications/list'">
+      Ver todos 
+      <!--<i class="fa fa-refresh"></i>-->
+    </a>
+    <!--<span class="fs-mini">{{ dateComplete }}</span>-->
+  </footer>
+</section>

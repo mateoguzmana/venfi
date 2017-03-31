@@ -1,0 +1,56 @@
+<div>
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Inicio</li>
+  <li class="breadcrumb-item active">Notificaciones</li>
+</ol>
+<section class="widget" widget>
+  <header>
+    <h4><span class="fw-semi-bold">Notificaciones</span></h4>
+    <div class="widget-controls">
+       <a (click)="LoadList()"><i class="fa fa-refresh"></i></a>
+    </div>
+  </header>
+  <div class="widget-body">
+    <div class="mt">
+      <div class="width-200 pull-xs-right">
+        <div class="input-group input-group-sm input-group-transparent input-group-rounded">
+          <span class="input-group-addon">
+            <i class="fa fa-search"></i>
+          </span>
+          <input class="form-control form-control-sm" id="table-search-input" [(ngModel)]="searchText" type="text" placeholder="Buscar">
+        </div>
+      </div>
+      <table class="table table-hover" [mfData]="Notifications" #mf="mfDataTable" [mfRowsOnPage]="10">
+        <thead>
+        <tr>
+          <th>
+            <mfDefaultSorter by="name">Nombre</mfDefaultSorter>
+          </th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let Notification of mf.data | SearchPipe : searchText">
+          <td>{{Notification.message.split("||||")[0]}}</td>
+          <td class="text-xs-right">
+            <button type="button" class="btn btn-info" title="Ver detalle" [routerLink]="['/app/notifications/view', Notification.idnotification]"><i class="fa fa-eye"></i></button>
+          </td>
+        </tr>
+        <tr *ngIf="(mf.data | SearchPipe : searchText).length === 0">
+          <td colspan="4" class="text-xs-center">
+            No hay resultados de busqueda.
+          </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+          <td colspan="12">
+            <mfBootstrapPaginator [rowsOnPageSet]="[10, 25, 50, 100]"></mfBootstrapPaginator>
+          </td>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</section>
+</div>

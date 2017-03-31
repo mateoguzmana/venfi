@@ -1,0 +1,99 @@
+<div *ngIf="View==1">
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Inicio</li>
+  <li class="breadcrumb-item active">Solicitud de crédito</li>
+</ol>
+<section class="widget" widget>
+  <header>
+    <h4><span class="fw-semi-bold">Solicitudes</span></h4>
+    <div class="widget-controls">
+       <!--<a *ngIf="Enter==1"  tooltip="Crear nueva solicitud" tooltipPlacement="left" [routerLink]="'../insert'"><i class="fa fa-plus"></i></a>-->
+       <a (click)="LoadList()"><i class="fa fa-refresh"></i></a>
+    </div>
+  </header>
+  <div class="widget-body">
+    <div class="mt">
+      <div class="width-200 pull-xs-right">
+        <div class="input-group input-group-sm input-group-transparent input-group-rounded">
+          <span class="input-group-addon">
+            <i class="fa fa-search"></i>
+          </span>
+          <input class="form-control form-control-sm" id="table-search-input" [(ngModel)]="searchText" type="text" placeholder="Buscar">
+        </div>
+      </div>
+      <table class="table table-hover" [mfData]="Credits" #mf="mfDataTable" [mfRowsOnPage]="10">
+        <thead>
+        <tr>
+          <th>
+            <mfDefaultSorter by="nit">Cédula</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="name">Nombre</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="name">Paso</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="state">Estado</mfDefaultSorter>
+          </th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let Credit of mf.data | SearchPipe : searchText">
+          <td>{{Credit.nit}}</td>
+          <td>{{Credit.name}}</td>
+          <td>{{Credit.workflow}}</td>
+          <td class="text-right">
+            <span [ngSwitch]="Credit.state">
+              <span *ngSwitchCase="0">Cancelado</span>
+              <span *ngSwitchCase="1">Habilitado</span>
+              <span *ngSwitchCase="2">En revisión</span>
+              <span *ngSwitchCase="3">Aprobado</span>
+            </span>
+          </td>
+          <td class="text-xs-right">
+            <button *ngIf="Actualize==1 && Credit.state==1" type="button" class="btn btn-primary" title="Actualizar" [routerLink]="['/app/credits/update', Credit.idcredit]"><i class="fa fa-pencil"></i></button>
+            <button *ngIf="View==1 && Credit.state==2 && Inspect!=1" type="button" class="btn btn-warning" title="Crédito en revisión">En revisión</button>
+            <button *ngIf="Inspect==1 && Credit.state==2" type="button"  [routerLink]="['/app/credits/inspect', Credit.idcredit]" class="btn btn-success">Revisar</button>
+            <button *ngIf="Remove==1 && Credit.state != 2 && Credit.state != 3" type="button"  data-toggle="modal" [attr.data-target]="'#myModal'+Credit.idcredit" [attr.title]="Credit.state == 1 ? 'Desactivar' : 'Activar'" [ngClass]="Credit.state == 1 ? 'btn btn-danger' : 'btn btn-success'">
+              <i [ngClass]="Credit.state == 1 ? 'fa fa-unlock-alt' : 'fa fa-unlock'"></i>
+            </button>
+            <button *ngIf="View==1 && Credit.state==3" type="button"  [routerLink]="['/app/credits/inspect', Credit.idcredit]" class="btn btn-info">Finalizada</button>
+          </td>
+          <div *ngIf="Remove==1" class="modal fade" [attr.id]="'myModal'+Credit.idcredit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">{{Credit.state == 1 ? 'Inhabilitar' : 'Habilitar'}} crédito</h4>
+                    </div>
+                    <div class="modal-body">
+                    ¿Desea {{Credit.state == 1 ? 'Inhabilitar' : 'Habilitar'}} el crédito del usuario con cédula N° {{Credit.nit}}?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-gander" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" (click)="changeState(Credit.idcredit, Credit.state)" data-dismiss="modal">Aceptar</button>
+                      </div>
+                  </div>
+                </div>
+              </div>
+        </tr>
+        <tr *ngIf="(mf.data | SearchPipe : searchText).length === 0">
+          <td colspan="4" class="text-xs-center">
+            No hay resultados de busqueda.
+          </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+          <td colspan="12">
+            <mfBootstrapPaginator [rowsOnPageSet]="[10, 25, 50, 100]"></mfBootstrapPaginator>
+          </td>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</section>
+</div>

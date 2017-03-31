@@ -1,0 +1,82 @@
+<div *ngIf="View==1"> 
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Inicio</li>
+  <li class="breadcrumb-item active">Privilegios</li>
+</ol>
+<h1 class="page-title"><span class="fw-semi-bold">Privilegios</span></h1>
+<div class="row">
+  <div class="col-lg-12">
+    <section class="widget" widget>
+      <header>
+          <!--Table <span class="fw-semi-bold">Styles</span>-->
+          <select *ngIf="Roles" (change)="ViewPrivileges(this)" id="Rol" [(ngModel)]="model.Rol" name="Rol"
+               #Rol="ngModel" required class="form-control select col-lg-3  col-md-3  col-sm-5  col-xs-6">
+              <option value="">Selecciona un rol</option>
+              <option *ngFor="let Role of Roles" [attr.value]="Role.idrole">{{Role.name}}</option>
+          </select>
+        <div class="widget-controls">
+        </div>
+      </header>
+      <div *ngIf="model.Rol != '';" class="widget-body col-lg-12" id="divList">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Nombre</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody id="TablePrivilegies">
+          <tr *ngFor="let Menu of Menus; let i=index" [attr.id]="Menu.id">
+            <input type="hidden" [attr.id]="'idmenu'+i" [value]="Menu.id">
+            <td>{{Menu.name}}</td>
+            <td>
+              <div class="row">
+                <div class="col-lg-3 col-sm-3 col-md-3">
+                  <div class="abc-checkbox abc-checkbox-primary">
+                    <input [attr.id]="'v'+i" type="checkbox" [attr.checked]="Menu.view == 1 ? true : null">
+                    <label [attr.for]="'v'+i">Mostrar</label>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-sm-3 col-md-3">
+                  <div class="abc-checkbox abc-checkbox-success">
+                    <input [attr.id]="'e'+i" type="checkbox" [attr.checked]="Menu.enter == 1 ? true : null">
+                    <label [attr.for]="'e'+i">Ingresar</label>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-sm-3 col-md-3">
+                  <div class="abc-checkbox abc-checkbox-warning">
+                    <input [attr.id]="'a'+i" type="checkbox" [attr.checked]="Menu.actualize == 1 ? true : null">
+                    <label [attr.for]="'a'+i">Actualizar</label>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-sm-3 col-md-3">
+                  <div class="abc-checkbox abc-checkbox-danger">
+                    <input [attr.id]="'r'+i" type="checkbox" [attr.checked]="Menu.remove == 1 ? true : null">
+                    <label [attr.for]="'r'+i">Eliminar</label>
+                  </div>
+                </div>
+                <div *ngIf="Menu.path=='viabilities' || Menu.path=='credits'" class="col-lg-3 col-sm-3 col-md-3">
+                  <div class="abc-checkbox abc-checkbox-info">
+                    <input [attr.id]="'c'+i" type="checkbox" [attr.checked]="Menu.inspect == 1 ? true : null">
+                    <label [attr.for]="'c'+i">Revisar</label>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="clearfix">
+          <div class="pull-right">
+            <button class="btn btn-warning btn-sm" (click)="Cancel()">Cancelar</button>
+            <button *ngIf="Actualize==1" class="btn btn-sm btn-inverse" (click)="Save()">Guardar</button>
+          </div>
+        </div>
+        <div id="MessageSuccess" style="display:none;"> 
+          <div class="alert alert-success">Privilegios actualizados correctamente.</div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+</div>

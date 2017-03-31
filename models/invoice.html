@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Estudio de viabilidad</title>
+    <style>
+      .clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+a {
+  color: #5D6975;
+  text-decoration: underline;
+}
+
+body {
+  position: relative;
+  width: 21cm;  
+  height: 29.7cm; 
+  margin: 0 auto; 
+  color: #001028;
+  background: #FFFFFF; 
+  font-family: Arial, sans-serif; 
+  font-size: 18px; 
+  font-family: Arial;
+}
+
+.text-alert {
+  font-size: 12px;
+}
+
+header {
+  padding: 10px 0;
+  margin-bottom: 30px;
+}
+
+#logo {
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+#logo img {
+  width: 250px;
+}
+
+h1 {
+  border-top: 1px solid  #5D6975;
+  border-bottom: 1px solid  #5D6975;
+  color: #5D6975;
+  font-size: 2.4em;
+  line-height: 1.4em;
+  font-weight: normal;
+  text-align: center;
+  margin: 0 0 20px 0;
+  background: url(dimension.png);
+}
+
+#project {
+  float: left;
+}
+
+#project .f1 {
+  color: #5D6975;
+  width: 50%;
+  text-align: left;
+  font-size: 0.8em;
+}
+
+#project .f2 {
+  text-align: right;
+  font-size: 12px;
+}
+
+#company {
+  float: right;
+  text-align: right;
+}
+
+#project div,
+#company div {
+  white-space: nowrap;        
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 20px;
+}
+
+table tr:nth-child(2n-1) td {
+  background: #F5F5F5;
+}
+
+table th,
+table td {
+  text-align: center;
+}
+
+table th {
+  padding: 5px 20px;
+  color: #5D6975;
+  border-bottom: 1px solid #C1CED9;
+  white-space: nowrap;        
+  font-weight: normal;
+}
+
+table .service,
+table .desc {
+  text-align: left;
+}
+
+table td {
+  padding: 20px;
+  text-align: right;
+}
+
+table td.service,
+table td.desc {
+  vertical-align: top;
+}
+
+table td.unit,
+table td.qty,
+table td.total {
+  font-size: 1.2em;
+}
+
+table td.grand {
+  border-top: 1px solid #5D6975;;
+}
+
+#notices .notice {
+  color: #5D6975;
+  font-size: 1.2em;
+}
+
+footer {
+  color: #5D6975;
+  width: 100%;
+  height: 30px;
+  position: absolute;
+  bottom: 0;
+  border-top: 1px solid #C1CED9;
+  padding: 8px 0;
+  text-align: center;
+}
+    </style>
+  </head>
+  <body>
+    <header class="clearfix">
+      <div id="logo">
+        <img src="https://www.psepagos.co/PSEHostingUI/GetTicketLogo.aspx?InternalIdentifier=d7eba1ce-2af9-4b22-92eb-d5850c2c9f2f">
+      </div>
+      <h1></h1>
+      <div id="company" class="clearfix">
+        <div>Venfi</div>
+        <div>455 Foggy Heights,<br /> AZ 85004, US</div>
+        <div>(602) 519-0450</div>
+        <div><a href="mailto:company@example.com">info@venfi.co</a></div>
+      </div>
+      <div id="project">
+        <div><span class="f1">FECHA</span> <span class="f2">{{:date}}</span></div>
+        <div><span class="f1">CONVENIO</span> <span class="f2">{{:agreement}}</span></div>
+        <div><span class="f1">ASESOR</span> <span class="f2">{{:consultant}}</span></div>
+        <div><span class="f1">VALOR MOTO</span> <span class="f2">{{:vehiclevalue}}</span></div>
+        <div><span class="f1">CUOTAS</span> <span class="f2">{{:quotas}}</span></div>
+        <div><span class="f1">REFERENCIA</span> <span class="f2">{{:vehiclereference}}</span></div>
+        <div><span class="f1">MODELO</span> <span class="f2">{{:vehiclemodel}}</span></div>
+        <div><span class="f1">VALOR FACT.</span> <span class="f2">{{:invoicevalue}}</span></div>
+      </div>
+    </header>
+    <main>
+      <table>
+        <thead>
+          <tr>
+            <th class="service">Solicitante</th>
+            <th width="50%"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="service">Nombre</td>
+            <td class="desc">{{:name}}</td>
+          </tr>
+          <tr>
+            <td class="service">Identificación</td>
+            <td class="desc">{{:nit}}</td>
+          </tr>
+          <tr>
+            <td class="service">Ingresos</td>
+            <td class="desc">{{:income}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <thead>
+          <tr>
+            <th class="service">Respaldo</th>
+            <th width="50%"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="service">Nombre</td>
+            <td class="desc">{{:namecodebtor}}</td>
+          </tr>
+          <tr>
+            <td class="service">Identificación</td>
+            <td class="desc">{{:nitcodebtor}}</td>
+          </tr>
+          <tr>
+            <td class="service">Ingresos</td>
+            <td class="desc">{{:incomecodebtor}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <table style="width:80%;margin:0 auto;">
+        <tbody>
+          <tr>
+            <td class="service" width="50%"><hr><br>Firma Solicitante</td>
+            <td class="desc"><hr><br>C.C.</td>
+          </tr>
+          <tr>
+            <td colspan="2"></td>
+          </tr>
+          <tr>
+            <td class="service" width="50%"><hr><br>Firma respaldo</td>
+            <td class="desc"><hr><br>C.C.</td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+    <footer class="text-alert">
+      “ Señores VENFI SAS: los autoriza para que utilicen los datos consignados y los que suministre con ocasión del crédito para que se me suministre o contacte de forma periódica y mientras la actividad comercial se encuentre en operación, todo tipo de información comercial relacionada con los productos y servicios contratados o que comercialice, para enviar ofertas, para realizar cobros, promociones, demás datos o actividades relacionadas, así como consultar y reportar a cualquier base de datos sobre nuestro comportamiento crediticio y comercial. Esta información, en caso de que VENFI SAS, así lo considere, será transferida a terceras personas, nacionales o extranjeras (naturales o jurídicas) en calidad de encargados del tratamiento, con las cuales contrate actividades de cualquier tipo, quienes darán a la base de datos el uso informado en la presente. Se le informa que usted como titular tiene los derechos consagrados en el artículo 8 de la ley 158 de 2012: A-) Conocer, actualizar y rectificar sus datos. B-) Solicitar prueba de su autorización. C-) Ser informado sobre el uso que se le ha dado a sus datos. D-) Presentar quejas ante la SIC por infracciones. E-) Renovar su autorización de acuerdo con el procedimiento creado por la SIC INT 31 NIT 900799969-5 F-) Acceder gratuitamente a sus datos personales. El responsable del tratamiento es VENFI SAS, CALLE 85 NUMERO 4801 INT 31 TORRE A OFICINA 642.”
+    </footer>
+  </body>
+</html>

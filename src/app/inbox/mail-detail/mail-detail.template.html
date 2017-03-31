@@ -1,0 +1,65 @@
+<div class="clearfix mb-xs">
+  <a class="btn btn-default btn-sm width-50 pull-xs-left" id="back-btn" (click)="onToBack()">
+    <i class="fa fa-angle-left fa-lg"></i>
+  </a>
+</div>
+<section class="widget widget-email">
+  <header>
+    <h4>{{mail.subject}}</h4>
+    <div class="widget-controls">
+      <a href="#"><i class="fa fa-print"></i></a>
+    </div>
+  </header>
+  <div class="widget-body">
+    <div id="email-view" class="email-view">
+      <div class="email-details clearfix">
+        <div class="email-details-content">
+          <span class="thumb thumb-sm pull-xs-left">
+            <img class="img-circle" src="http://seeklogo.com/images/M/mail-envelope-symbol-logo-4AB011B4E0-seeklogo.com.gif" alt="Philip Horbacheuski">
+          </span>
+          <div class="pull-xs-left">
+            <strong>{{mail.sender}}</strong>
+            <span *ngIf="mail.senderMail" class="email">&lt;{{mail.senderMail}}&gt;</span>
+            <span class="receiver">Para: <span *ngFor="let to of UsersEmail"> {{to.namereceiver}}, </span></span>
+          </div>
+          <div class="email-actions pull-xs-right">
+            <div class="btn-group">
+              <button id="email-opened-reply" class="btn btn-sm btn-gray" (click)="goToReply(mail)">
+                <i class="fa fa-reply"></i> Responder
+              </button>
+            </div>
+          </div>
+          <time class="email-date pull-xs-right">
+            {{mail.date}}
+          </time>
+        </div>
+      </div>
+      <div class="email-body">
+        <div class="email-body" [innerHTML]="mail.message"></div>
+      </div>
+      <div *ngIf="!mail.message" class="email-body">
+        {{mail.subject}}
+      </div>
+      <!--
+      <div class="email-attachments">
+        <div class="row">
+          <div class="col-sm-6">
+            <hr *ngIf="mail.attachments">
+            <p  *ngIf="mail.attachments" class="details"><strong>{{mail.attachments.length}} attachments</strong> &nbsp;-&nbsp; <a href="#">Download all attachments</a>
+              &nbsp;&nbsp;&nbsp;<a href="#">View all Images</a></p>
+            <section *ngFor="let attachment of mail.attachments; let i = index" class="attachment">
+              <img class="img-fluid" src="{{attachment}}" alt="">
+              <h5 class="title">some-cool-image{{i + 1}}.jpg</h5>
+              <p class="details">
+                568K  &nbsp;&nbsp;
+                <a href="#">View</a> &nbsp;&nbsp;
+                <a href="#">Download</a>
+              </p>
+            </section>
+          </div>
+        </div>
+      </div>
+      -->
+    </div>
+  </div>
+</section>

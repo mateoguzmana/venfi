@@ -1,0 +1,113 @@
+<div *ngIf="Actualize==1"> 
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Roles</li>
+  <li class="breadcrumb-item active">Actualizar</li>
+</ol>
+<h3 class="page-title"><span class="fw-semi-bold">Actualizar</span></h3>
+<div class="row">
+  <div class="col-lg-12">
+    <section class="widget" widget>
+      <header>
+        <h6>Actualizar rol <span class="fw-semi-bold">{{Role.name}}</span></h6>
+        <div class="widget-controls">
+          <a href="#"><i class="glyphicon glyphicon-cog"></i></a>
+          <a href="#"><i class="fa fa-refresh"></i></a>
+        </div>
+      </header>
+      <div class="widget-body">
+        <form role="form" (ngSubmit)="onSubmit()" #roleForm="ngForm">
+            <div class="row">
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="name">Nombre del rol</label>
+                    <input class="form-control" type="text" placeholder="Nombre" id="name" 
+                    [(ngModel)]="Role.name" name="name" #name="ngModel" required>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="photo">Foto</label>
+                    <input class="form-control" type="file" id="photo" accept="image/*">
+                  </div>
+                  <div class="row" *ngIf="Role.photo">
+                    <div class="col-sm-12">
+                      <a target="_blank" [attr.href]="routeFile+Role.photo">(Ver foto)</a>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <hr>
+              <h5><strong>Asignar privilegios</strong></h5>
+            <hr>  
+            <div class="row">
+              <div class="col-sm-12">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Nombre</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="TablePrivilegies">
+                  <tr *ngFor="let Menu of Menus; let i=index" [attr.id]="Menu.id">
+                    <input type="hidden" [attr.id]="'idmenu'+i" [value]="Menu.id">
+                    <td>{{Menu.name}}</td>
+                    <td>
+                      <div class="row">
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                          <div class="abc-checkbox abc-checkbox-primary">
+                            <input [attr.id]="'v'+i" type="checkbox" [attr.checked]="Menu.view == 1 ? true : null">
+                            <label [attr.for]="'v'+i">Mostrar</label>
+                          </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                          <div class="abc-checkbox abc-checkbox-success">
+                            <input [attr.id]="'e'+i" type="checkbox" [attr.checked]="Menu.enter == 1 ? true : null">
+                            <label [attr.for]="'e'+i">Ingresar</label>
+                          </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                          <div class="abc-checkbox abc-checkbox-warning">
+                            <input [attr.id]="'a'+i" type="checkbox" [attr.checked]="Menu.actualize == 1 ? true : null">
+                            <label [attr.for]="'a'+i">Actualizar</label>
+                          </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                          <div class="abc-checkbox abc-checkbox-danger">
+                            <input [attr.id]="'r'+i" type="checkbox" [attr.checked]="Menu.remove == 1 ? true : null">
+                            <label [attr.for]="'r'+i">Eliminar</label>
+                          </div>
+                        </div>
+                        <div *ngIf="Menu.path=='viabilities' || Menu.path=='credits'" class="col-lg-3 col-sm-3 col-md-3">
+                          <div class="abc-checkbox abc-checkbox-info">
+                            <input [attr.id]="'c'+i" type="checkbox" [attr.checked]="Menu.inspect == 1 ? true : null">
+                            <label [attr.for]="'c'+i">Revisar</label>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <button type="submit" class="btn btn-primary" [disabled]="!roleForm.form.valid">Guardar</button>
+                <button class="btn btn-inverse" [routerLink]="'../../'">Volver</button>
+              </div>
+            </div>
+            &nbsp;
+            <div class="row" style="display:none;" id="MessageSuccess">
+              <div class="col-lg-6">
+                <div class="alert alert-success">
+                  Actualizado correctamente.
+                </div>
+              </div>
+            </div>
+        </form>
+      </div>
+    </section>
+  </div>
+</div>
+</div>

@@ -1,0 +1,202 @@
+<div *ngIf="Actualize==1"> 
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Viabilidad</li>
+  <li class="breadcrumb-item active">Ver</li>
+</ol>
+<h3 class="page-title"><span class="fw-semi-bold">Ver</span></h3>
+<div class="row">
+  <div class="col-lg-12">
+    <section class="widget" widget>
+      <header>
+        <h6>Ver viabilidad <span class="fw-semi-bold">{{Viability.name}}</span></h6>
+        <div class="widget-controls">
+          <a href="#"><i class="glyphicon glyphicon-cog"></i></a>
+          <a href="#"><i class="fa fa-refresh"></i></a>
+        </div>
+      </header>
+      <div class="widget-body">
+        <form role="form" (ngSubmit)="onSubmit()" #viabilityForm="ngForm">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                      <label for="note">Nota</label>
+                      <textarea class="form-control" placeholder="Nota" id="note" 
+                      [(ngModel)]="Viability.note" name="note" #note="ngModel" required readonly></textarea>
+                    </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="date">Fecha</label>
+                    <input class="form-control" type="text" placeholder="Fecha" id="date" 
+                    [(ngModel)]="Viability.date" name="date" #date="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="agreement">Convenio</label>
+                    <input class="form-control" type="text" placeholder="Convenio" id="agreement" 
+                    [(ngModel)]="Viability.nameagreement" name="agreement" #nameagreement="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="consultantname">Asesor</label>
+                    <input class="form-control" type="text" placeholder="Asesor" id="consultantname" 
+                    [(ngModel)]="Viability.consultantname" name="consultantname" #consultantname="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="vehiclevalue">Valor a financiar</label>
+                    <input class="form-control" type="text" placeholder="Valor a financiar" id="vehiclevalue" 
+                    [(ngModel)]="Viability.vehiclevalue" name="vehiclevalue" #vehiclevalue="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="quotas">Número de cuotas</label>
+                    <input class="form-control" type="number" placeholder="Número de cuotas" id="quotas" 
+                    [(ngModel)]="Viability.quotas" name="quotas" #quotas="ngModel" required readonly>
+                  </div>
+              </div>
+          </div>
+          <h6><strong>Datos seguro</strong></h6>
+          <hr>
+          <div class="row">
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="vehiclereference">Referencia de la moto</label>
+                    <input class="form-control" type="text" placeholder="Referencia de la moto" id="vehiclereference" 
+                    [(ngModel)]="Viability.vehiclereference" name="vehiclereference" #vehiclereference="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="vehiclemodel">Modelo de la moto</label>
+                    <input class="form-control" type="text" placeholder="Modelo de la moto" id="vehiclemodel" 
+                    [(ngModel)]="Viability.vehiclemodel" name="vehiclemodel" #vehiclemodel="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="invoicevalue">Valor de la factura</label>
+                    <input class="form-control" type="text" placeholder="Referencia de la moto" id="invoicevalue" 
+                    [(ngModel)]="Viability.invoicevalue" name="invoicevalue" #invoicevalue="ngModel" required readonly>
+                  </div>
+              </div>
+            </div>
+            <h6><strong>Datos solicitante</strong></h6>
+            <hr size="90%">
+            <div class="row">
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="nit">Cédula</label>
+                    <input class="form-control" type="text" placeholder="Cédula" id="nit" 
+                    [(ngModel)]="Viability.nit" name="nit" #nit="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="name">Nombre y apellido</label>
+                    <input class="form-control" type="text" placeholder="Nombre y apellido" id="name" 
+                    [(ngModel)]="Viability.name" name="name" #name="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="birthdate">Fecha de nacimiento</label>
+                    <input class="form-control" type="date" placeholder="Fecha de nacimiento" id="birthdate" 
+                    [(ngModel)]="Viability.birthdate" name="birthdate" #birthdate="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="occupation">Ocupación</label>
+                    <select class="form-control occupation" id="occupation" 
+                    [(ngModel)]="Viability.occupation" name="occupation" #occupation="ngModel" required readonly>
+                      <option value="" selected>Seleccione una opción</option>
+                      <option value="1">Empleado</option>
+                      <option value="2">Estudiante</option>
+                      <option value="3">Pensionado</option>
+                      <option value="4">Independiente</option>
+                    </select>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="income">Ingresos</label>
+                    <input class="form-control" type="text" placeholder="Ingresos" id="income" 
+                    [(ngModel)]="Viability.income" name="income" #income="ngModel" required readonly>
+                  </div>
+              </div>
+            </div>
+            <h6><strong>Datos respaldo</strong></h6>
+            <hr size="90%">
+            <div class="row">
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="nitcodebtor">Cédula</label>
+                    <input class="form-control" type="text" placeholder="Cédula" id="nitcodebtor" 
+                    [(ngModel)]="Viability.nitcodebtor" name="nitcodebtor" #nitcodebtor="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="namecodebtor">Nombre y apellido</label>
+                    <input class="form-control" type="text" placeholder="Nombre y apellido" id="namecodebtor" 
+                    [(ngModel)]="Viability.namecodebtor" name="namecodebtor" #namecodebtor="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="incomecodebtor">Ingresos</label>
+                    <input class="form-control" type="text" placeholder="Ingresos" id="incomecodebtor" 
+                    [(ngModel)]="Viability.incomecodebtor" name="incomecodebtor" #incomecodebtor="ngModel" required readonly>
+                  </div>
+              </div>
+              <div class="col-lg-6" *ngIf="Viability.file">
+                  <div class="form-group">
+                    <label for="incomecodebtor">Documento firmado</label>
+                    <a target="_blank" [attr.href]="routeFile+Viability.file" class="form-control">(Ver archivo adjunto)</a>
+                  </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <button class="btn btn-inverse" [routerLink]="'../../'">Salir</button>
+                <button class="btn btn-primary" type="button" data-toggle="modal" [attr.data-target]="'#myModalClone'">Re-utilizar</button>
+              </div>
+            </div>
+            &nbsp;
+            <div class="row" style="display:none;" id="MessageSuccess">
+              <div class="col-lg-6">
+                <div class="alert alert-success">
+                  Actualizado correctamente.
+                </div>
+              </div>
+            </div>        
+            <div class="modal fade" [attr.id]="'myModalClone'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content" id="MessageSuccess1">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">¿Realmente desea re-utilizar este estudio de viabilidad?</h4>
+                    </div>
+                    <div class="modal-body">
+                    Está a punto de re-utilizar este estudio de viabilidad. Tenga en cuenta que al ejecutar esto creará un nuevo estudio de viabilidad utilizando los mismos datos.
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnCloseModalClone" type="button" class="btn btn-gander" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-primary" type="submit">Aceptar</button>
+                      </div>
+                  </div>
+                </div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+</div>
+</div>
